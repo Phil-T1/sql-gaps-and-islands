@@ -35,7 +35,7 @@ def generate_continuous_sensors_event_data(
     """
     # Generate data for all sensors using list comprehension and concatenate
     pd.concat([
-        get_sensor_event_data_df(
+        get_continuous_sensor_event_data_df(
             sensor_num=sensor,
             start_datetime=start_datetime,
             end_datetime=end_datetime,
@@ -48,7 +48,7 @@ def generate_continuous_sensors_event_data(
         for sensor in range(1, sensors + 1)
     ]).sort_values(['timestamp', 'sensor_id']).reset_index(drop=True).to_csv(output_file_name, index=False)
 
-def get_sensor_event_data_df(
+def get_continuous_sensor_event_data_df(
     sensor_num: int,
     start_datetime: datetime,
     end_datetime: datetime,
