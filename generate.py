@@ -80,6 +80,7 @@ def get_sensor_event_data_df(
             - sensor_id: identifier of the sensor
             - sensor_value: binary value indicating event occurrence (0 or 1)
     """
+    # Generate continuous series of timestamps for the sensor data at given sample rate
     timestamps = pd.date_range(start=start_datetime, end=end_datetime, freq=f'{sensor_sample_rate_secs}s')
     total_samples = len(timestamps)
     
