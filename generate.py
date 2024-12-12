@@ -28,6 +28,7 @@ def generate_continuous_sensors_event_data(
         max_events (int): Maximum number of events per sensor
         min_event_duration_secs (int): Minimum duration of an event in seconds
         max_event_duration_secs (int): Maximum duration of an event in seconds
+        output_file_name (str): Name of the output CSV file
 
     Returns:
         None: Data is saved directly to a CSV file
@@ -59,6 +60,10 @@ def get_sensor_event_data_df(
 ) -> pd.DataFrame:
     """Generate synthetic sensor event data for a single sensor.
     
+    Creates a DataFrame containing event data for a single sensor over the specified
+    time range. Events are randomly generated with varying durations, where a value
+    of 1 indicates an event is occurring and 0 indicates no event.
+    
     Args:
         sensor_num (int): Sensor ID
         start_datetime (datetime): Start of the data range
@@ -70,9 +75,11 @@ def get_sensor_event_data_df(
         max_event_duration_secs (int): Maximum duration of an event in seconds
         
     Returns:
-        pd.DataFrame: Sensor event data with timestamp, sensor_id, and sensor_value columns
+        pd.DataFrame: DataFrame containing sensor event data with columns:
+            - timestamp: datetime of the reading
+            - sensor_id: identifier of the sensor
+            - sensor_value: binary value indicating event occurrence (0 or 1)
     """
-    # Create an array of timestamps at the specified sample rate
     timestamps = pd.date_range(start=start_datetime, end=end_datetime, freq=f'{sensor_sample_rate_secs}s')
     total_samples = len(timestamps)
     
@@ -85,12 +92,13 @@ def get_sensor_event_data_df(
         start_idx = random.randint(0, total_samples - duration_steps)
         sensor_values.iloc[start_idx:start_idx + duration_steps] = 1
     
-    # Return the data as a DataFrame
+    # Return DataFrame with sensor data
     return pd.DataFrame({
         'timestamp': timestamps,
         'sensor_id': sensor_num,
         'sensor_value': sensor_values
     })
 
+# Run this file directly to test the function
 if __name__ == '__main__':
     generate_continuous_sensors_event_data()
