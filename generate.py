@@ -46,7 +46,10 @@ def generate_continuous_sensors_event_data(
             max_event_duration_secs=max_event_duration_secs
         )
         for sensor in range(1, sensors + 1)
-    ]).sort_values(['timestamp', 'sensor_id']).reset_index(drop=True).to_csv(output_file_name, index=False)
+    ]).sort_values(['timestamp', 'sensor_id']).reset_index(drop=True).to_csv(
+        output_file_name,
+        index=False
+        )
 
 def get_continuous_sensor_event_data_df(
     sensor_num: int,
@@ -80,8 +83,12 @@ def get_continuous_sensor_event_data_df(
             - sensor_id: identifier of the sensor
             - sensor_value: binary value indicating event occurrence (0 or 1)
     """
-    # Generate continuous series of timestamps for the sensor data at given sample rate
-    timestamps = pd.date_range(start=start_datetime, end=end_datetime, freq=f'{sensor_sample_rate_secs}s')
+    # Generate continuous series of timestamps for sensor_id at given sample rate
+    timestamps = pd.date_range(
+        start=start_datetime,
+        end=end_datetime,
+        freq=f'{sensor_sample_rate_secs}s'
+        )
     total_samples = len(timestamps)
     
     # Initialize sensor values array with zeros
@@ -89,7 +96,10 @@ def get_continuous_sensor_event_data_df(
     
     # Generate random events
     for _ in range(random.randint(min_events, max_events)):
-        duration_steps = random.randint(min_event_duration_secs, max_event_duration_secs) // sensor_sample_rate_secs
+        duration_steps = random.randint(
+            min_event_duration_secs,
+            max_event_duration_secs
+            ) // sensor_sample_rate_secs
         start_idx = random.randint(0, total_samples - duration_steps)
         sensor_values.iloc[start_idx:start_idx + duration_steps] = 1
     
