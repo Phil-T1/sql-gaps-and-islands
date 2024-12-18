@@ -12,7 +12,7 @@ def generate_continuous_sensors_event_data(
     max_events: int = 5,
     min_event_duration_secs: int = 60,
     max_event_duration_secs: int = 3600 * 3,
-    output_file_name: str = "sensor_data_continuous.csv",
+    output_file_name: str = "sensor_data.csv",
 ) -> None:
     """Generate synthetic sensor event data and save it to a CSV file.
 
