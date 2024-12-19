@@ -42,6 +42,6 @@ def plot_sensor_data(df: pd.DataFrame) -> None:
     )  # Show every 2 hours
 
     plt.ylim(-0.1, 1.1)  # Add some padding to the y-axis
-    plt.legend(bbox_to_anchor=(1.05, 1), loc="upper left")
+    plt.legend(loc="upper right")
     plt.grid(True, which="both", linestyle="--", alpha=0.7)
     plt.tight_layout()
